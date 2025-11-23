@@ -12,8 +12,7 @@ public class CorsFilter implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext request,
                        ContainerResponseContext response) throws IOException {
-        
-        // Permite TODOS os domínios do Vercel e localhost
+
         String origin = request.getHeaderString("Origin");
         if (origin != null) {
             response.getHeaders().add("Access-Control-Allow-Origin", origin);
