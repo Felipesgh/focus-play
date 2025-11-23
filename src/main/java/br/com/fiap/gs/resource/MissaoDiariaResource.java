@@ -25,9 +25,16 @@ public class MissaoDiariaResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirMissao(MissaoDiaria missao) throws SQLException {
+    public Response inserirMissao(MissaoDiaria missao, @Context UriInfo uriInfo) throws SQLException {
         missaoBO.inserirBo(missao);
-        return Response.status(Response.Status.CREATED).entity(missao).build();
+
+
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(Integer.toString(missao.getId()));
+
+        return Response.created(builder.build())
+                .entity(missao)
+                .build();
     }
 
     @PUT
